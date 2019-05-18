@@ -10,7 +10,7 @@ import java.util.List;
 /*
  * Created by Gaurav Sharma on 18 May 2019
  */
-@Mapper
+@Mapper(componentModel = "spring")
 public interface VendorServiceMapper {
 
     List<VendorBo> convertVendorEntityListToBoList(List<VendorEntity> vendorEntities);
