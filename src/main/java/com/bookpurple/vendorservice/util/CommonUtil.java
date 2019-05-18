@@ -8,6 +8,6 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class CommonUtil {
 
     public static String UidGenerator(int length) {
-        return RandomStringUtils.randomAlphabetic(length);
+        return RandomStringUtils.randomNumeric(length);
     }
 }
