@@ -50,4 +50,11 @@ public class VendorController {
         vendorService.createVendor(vendorRequestBo);
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
+
+    @PostMapping(value = Constants.UriConstants.GET_VENDOR_DETAILS,
+            consumes = APPLICATION_JSON_VALUE,
+            produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getVendorDetails (){
+        return new ResponseEntity("success", HttpStatus.OK);
+    }
 }

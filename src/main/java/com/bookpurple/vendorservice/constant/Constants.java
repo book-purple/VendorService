@@ -14,5 +14,6 @@ public class Constants {
         public static final String GET_ALL_VENDORS = "/get/all";
         public static final String PUT_DUMMY_VENDORS = "/dummy/put";
         public static final String ADD_VENDOR = "/add";
+        public static final String GET_VENDOR_DETAILS = "/details";
     }
 }
