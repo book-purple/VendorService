@@ -1,5 +1,8 @@
 package com.bookpurple.vendorservice.controller;
 
+import com.bookpurple.vendorservice.bo.NewVendorRequestBo;
+import com.bookpurple.vendorservice.bo.VendorBo;
+import com.bookpurple.vendorservice.dto.VendorRequestDto;
 import com.bookpurple.vendorservice.constant.Constants;
 import com.bookpurple.vendorservice.dto.VendorDto;
 import com.bookpurple.vendorservice.mapper.VendorServiceMapper;
@@ -7,9 +10,7 @@ import com.bookpurple.vendorservice.service.IVendorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,5 +34,20 @@ public class VendorController {
         List<VendorDto> vendorDtos = vendorServiceMapper.
                 convertVendorBoListToDto(vendorService.getAllVendors());
         return new ResponseEntity(vendorDtos, HttpStatus.OK);
+    }
+
+    @GetMapping(value = Constants.UriConstants.PUT_DUMMY_VENDORS, produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> addDummyVendors() {
+        vendorService.addDummyVendors();
+        return new ResponseEntity("success", HttpStatus.OK);
+    }
+
+    @PostMapping(value = Constants.UriConstants.ADD_VENDOR,
+            consumes = {APPLICATION_JSON_VALUE},
+            produces = {APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> addVendor(@RequestBody VendorRequestDto vendorRequestDto) {
+        NewVendorRequestBo vendorRequestBo = vendorServiceMapper.convertNewVendorDtoToBo(vendorRequestDto);
+        vendorService.createVendor(vendorRequestBo);
+        return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 }

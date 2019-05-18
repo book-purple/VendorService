@@ -12,5 +12,7 @@ public class Constants {
 
     public static class UriConstants {
         public static final String GET_ALL_VENDORS = "/get/all";
+        public static final String PUT_DUMMY_VENDORS = "/dummy/put";
+        public static final String ADD_VENDOR = "/add";
     }
 }
