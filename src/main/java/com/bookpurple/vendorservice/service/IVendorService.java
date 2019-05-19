@@ -1,5 +1,6 @@
 package com.bookpurple.vendorservice.service;
 
+import com.bookpurple.vendorservice.bo.NewVendorRequestBo;
 import com.bookpurple.vendorservice.bo.VendorBo;
 
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.List;
  */
 public interface IVendorService {
 
-    VendorBo createVendor();
+    VendorBo createVendor(NewVendorRequestBo vendorRequestBo);
 
     List<VendorBo> getAllVendors();
+
+    void addDummyVendors();
 }
