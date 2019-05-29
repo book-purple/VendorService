@@ -17,7 +17,7 @@ public interface VendorServiceMapper {
 
     VendorEntity convertVendorBoToEntity(VendorBo vendorBo);
 
-    VendorBo converVendorEntityToBo(VendorEntity vendorEntity);
+    VendorBo convertVendorEntityToBo(VendorEntity vendorEntity);
 
     List<VendorBo> convertVendorEntityListToBoList(List<VendorEntity> vendorEntities);
 

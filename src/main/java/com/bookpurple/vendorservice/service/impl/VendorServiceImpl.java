@@ -47,7 +47,7 @@ public class VendorServiceImpl implements IVendorService {
     }
 
     private VendorBo saveVendor(VendorBo vendorBo) {
-        return serviceMapper.converVendorEntityToBo(
+        return serviceMapper.convertVendorEntityToBo(
                 vendorMasterRepo
                         .save(serviceMapper
                                 .convertVendorBoToEntity(vendorBo)));

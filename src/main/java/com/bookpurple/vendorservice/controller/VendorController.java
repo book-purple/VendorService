@@ -57,4 +57,11 @@ public class VendorController {
     public ResponseEntity<String> getVendorDetails (){
         return new ResponseEntity("success", HttpStatus.OK);
     }
+
+    @GetMapping(value = Constants.UriConstants.GET_VENDOR_LIST,
+    produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getVendorsList(@PathVariable String requestId) {
+
+        return new ResponseEntity("success", HttpStatus.OK);
+    }
 }

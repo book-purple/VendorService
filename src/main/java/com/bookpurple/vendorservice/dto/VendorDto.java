@@ -1,6 +1,6 @@
 package com.bookpurple.vendorservice.dto;
 
-import com.bookpurple.vendorservice.model.AbstractVendorModel;
+import com.bookpurple.vendorservice.model.mongo.VendorModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class VendorDto extends AbstractVendorModel {
+public class VendorDto extends VendorModel {
 }

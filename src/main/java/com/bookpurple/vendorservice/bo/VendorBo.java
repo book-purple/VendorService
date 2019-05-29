@@ -1,6 +1,6 @@
 package com.bookpurple.vendorservice.bo;
 
-import com.bookpurple.vendorservice.model.AbstractVendorModel;
+import com.bookpurple.vendorservice.model.mongo.VendorModel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,7 +17,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-public class VendorBo extends AbstractVendorModel {
+public class VendorBo extends VendorModel {
 
     @Builder
     public VendorBo(String id,

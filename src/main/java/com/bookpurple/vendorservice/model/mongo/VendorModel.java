@@ -1,4 +1,4 @@
-package com.bookpurple.vendorservice.model;
+package com.bookpurple.vendorservice.model.mongo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class AbstractVendorModel {
+public class VendorModel {
 
     @Id
     private String id;
@@ -34,4 +34,5 @@ public abstract class AbstractVendorModel {
     private String mobile;
     private Date createdAt;
     private String image;
+    private double rating;
 }
