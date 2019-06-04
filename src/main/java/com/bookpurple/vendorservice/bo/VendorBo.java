@@ -26,7 +26,8 @@ public class VendorBo extends VendorModel {
                     String email,
                     String mobile,
                     Date createdAt,
-                    String image) {
-        super(id, name, uid, email, mobile, createdAt, image);
+                    String image,
+                    double rating) {
+        super(id, name, uid, email, mobile, createdAt, image, rating);
     }
 }

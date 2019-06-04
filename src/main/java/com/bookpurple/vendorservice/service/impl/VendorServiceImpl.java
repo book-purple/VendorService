@@ -40,7 +40,7 @@ public class VendorServiceImpl implements IVendorService {
                 .email(vendorRequestBo.getEmail())
                 .mobile(vendorRequestBo.getMobile())
                 .image(vendorRequestBo.getImage())
-                .uid("BP"+ CommonUtil.UidGenerator(5))
+                .uid("BP" + CommonUtil.UidGenerator(5))
                 .createdAt(new Date())
                 .build();
         return saveVendor(vendorBo);
@@ -59,9 +59,20 @@ public class VendorServiceImpl implements IVendorService {
     }
 
     public void addDummyVendors() {
-        for (VendorBo vendorBo: vendorDummyDataProvider.getDummyVendorList()) {
+        for (VendorBo vendorBo : vendorDummyDataProvider.getDummyVendorList()) {
             VendorEntity vendorEntity = serviceMapper.convertVendorBoToEntity(vendorBo);
             vendorMasterRepo.save(vendorEntity);
         }
+    }
+
+    @Override
+    public VendorBo getVendorByVendorId(String vendorId) {
+        VendorEntity vendorEntity = vendorSlaveRepo.findById(vendorId).orElse(null);
+        return serviceMapper.convertVendorEntityToBo(vendorEntity);
+    }
+
+    @Override
+    public VendorEntity getVendorEntityByVendorId(String vendorId) {
+        return vendorSlaveRepo.findById(vendorId).orElse(null);
     }
 }
