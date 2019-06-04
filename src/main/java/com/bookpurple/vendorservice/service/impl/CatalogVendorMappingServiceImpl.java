@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Written by Gaurav Sharma on 03 Jun 2019
@@ -64,10 +65,21 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
         if (null != eventId) {
             // map vendor to event
             eventVendorMappingBo.getVendorEntities().add(vendorEntity);
+            eventVendorMappingBo =
+                    vendorServiceMapper
+                            .convertEventVendorMappingEntityToBo(
+                                    eventVendorMappingMasterRepo
+                                            .save(vendorServiceMapper
+                                                    .convertEventVendorMappingBoToEntity(eventVendorMappingBo)));
         }
         if (null != serviceId) {
             // map vendor to service
             serviceVendorMappingBo.getVendorEntities().add(vendorEntity);
+            serviceVendorMappingBo =
+                    vendorServiceMapper
+                            .convertServiceVendorMappingEntityToBo(serviceVendorMappingMasterRepo
+                                    .save(vendorServiceMapper
+                                            .convertServiceVendorMappingBoToEntity(serviceVendorMappingBo)));
         }
         return CatalogVendorMappingResponseBo.builder()
                 .eventVendorMappingBo(eventVendorMappingBo)
@@ -77,9 +89,11 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
 
     private EventVendorMappingBo getEventVendorMapping(String eventId) {
         EventVendorMappingEntity eventVendorMappingEntity = eventVendorMappingSlaveRepo.findByEventId(eventId);
-        if (null == eventVendorMappingEntity) {
+        if (null != eventVendorMappingEntity) {
             return vendorServiceMapper.convertEventVendorMappingEntityToBo(eventVendorMappingEntity);
+
         }
+        logger.info("No event found for eventId: " + eventId);
         return EventVendorMappingBo.builder()
                 .eventId(eventId)
                 .vendorEntities(new ArrayList<>())
@@ -87,6 +101,14 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
     }
 
     private ServiceVendorMappingBo getServiceVendorMapping(String serviceId) {
-        return null;
+        ServiceVendorMappingEntity serviceVendorMappingEntity = serviceVendorMappingSlaveRepo.findByServiceId(serviceId);
+        if (null != serviceVendorMappingEntity) {
+            return vendorServiceMapper.convertServiceVendorMappingEntityToBo(serviceVendorMappingEntity);
+        }
+        logger.info("No event found for serviceId: " + serviceId);
+        return ServiceVendorMappingBo.builder()
+                .serviceId(serviceId)
+                .vendorEntities(new ArrayList<>())
+                .build();
     }
 }

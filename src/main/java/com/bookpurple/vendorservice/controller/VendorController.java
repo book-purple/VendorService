@@ -71,7 +71,7 @@ public class VendorController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
-    @PostMapping(value = Constants.UriConstants.ADD_EVENT_VENDOR_MAPPING,
+    @PostMapping(value = Constants.UriConstants.ADD_VENDOR_MAPPING,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CatalogVendorMappingResponseDto> addEventVendorMapping(@RequestBody CatalogVendorMappingRequestDto catalogVendorMappingRequestDto) {
