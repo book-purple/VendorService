@@ -65,22 +65,31 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
         if (null != eventId) {
             // map vendor to event
             eventVendorMappingBo.getVendorEntities().add(vendorEntity);
-            eventVendorMappingBo =
-                    vendorServiceMapper
-                            .convertEventVendorMappingEntityToBo(
-                                    eventVendorMappingMasterRepo
-                                            .save(vendorServiceMapper
-                                                    .convertEventVendorMappingBoToEntity(eventVendorMappingBo)));
+            eventVendorMappingBo = saveEventVendorMapping(eventVendorMappingBo);
         }
         if (null != serviceId) {
             // map vendor to service
             serviceVendorMappingBo.getVendorEntities().add(vendorEntity);
-            serviceVendorMappingBo =
-                    vendorServiceMapper
-                            .convertServiceVendorMappingEntityToBo(serviceVendorMappingMasterRepo
-                                    .save(vendorServiceMapper
-                                            .convertServiceVendorMappingBoToEntity(serviceVendorMappingBo)));
+            serviceVendorMappingBo = saveServiceVendorMapping(serviceVendorMappingBo);
         }
+        return createVendorMappingResponse(eventVendorMappingBo, serviceVendorMappingBo);
+    }
+
+    @Override
+    public CatalogVendorMappingResponseBo getVendorMapping(CatalogVendorMappingRequestBo catalogVendorMappingRequestBo) {
+        EventVendorMappingBo eventVendorMappingBo = null;
+        ServiceVendorMappingBo serviceVendorMappingBo = null;
+        if (null != catalogVendorMappingRequestBo.getEventId()) {
+            eventVendorMappingBo = getEventVendorMapping(catalogVendorMappingRequestBo.getEventId());
+        }
+        if (null != catalogVendorMappingRequestBo.getServiceId()) {
+            serviceVendorMappingBo = getServiceVendorMapping(catalogVendorMappingRequestBo.getServiceId());
+        }
+        return createVendorMappingResponse(eventVendorMappingBo, serviceVendorMappingBo);
+    }
+
+    private CatalogVendorMappingResponseBo createVendorMappingResponse(EventVendorMappingBo eventVendorMappingBo,
+                                                                       ServiceVendorMappingBo serviceVendorMappingBo) {
         return CatalogVendorMappingResponseBo.builder()
                 .eventVendorMappingBo(eventVendorMappingBo)
                 .serviceVendorMappingBo(serviceVendorMappingBo)
@@ -110,5 +119,32 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
                 .serviceId(serviceId)
                 .vendorEntities(new ArrayList<>())
                 .build();
+    }
+
+    /**
+     * Function to save event and vendor mapping
+     *
+     * @param eventVendorMappingBo eventVendorMappingBo
+     * @return {@link EventVendorMappingBo}
+     */
+    private EventVendorMappingBo saveEventVendorMapping(EventVendorMappingBo eventVendorMappingBo) {
+        return vendorServiceMapper
+                .convertEventVendorMappingEntityToBo(
+                        eventVendorMappingMasterRepo
+                                .save(vendorServiceMapper
+                                        .convertEventVendorMappingBoToEntity(eventVendorMappingBo)));
+    }
+
+    /**
+     * Function to save service and vendor mapping
+     *
+     * @param serviceVendorMappingBo serviceVendorMappingBo
+     * @return {@link ServiceVendorMappingBo}
+     */
+    private ServiceVendorMappingBo saveServiceVendorMapping(ServiceVendorMappingBo serviceVendorMappingBo) {
+        return vendorServiceMapper
+                .convertServiceVendorMappingEntityToBo(serviceVendorMappingMasterRepo
+                        .save(vendorServiceMapper
+                                .convertServiceVendorMappingBoToEntity(serviceVendorMappingBo)));
     }
 }

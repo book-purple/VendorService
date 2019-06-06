@@ -15,4 +15,11 @@ public interface ICatalogVendorMappingService {
      * @return {@link CatalogVendorMappingResponseBo}
      */
     CatalogVendorMappingResponseBo createVendorMapping(CatalogVendorMappingRequestBo catalogVendorMappingRequestBo);
+
+    /**
+     * Function to get vendor mapping with event or service
+     * @param catalogVendorMappingRequestBo catalogVendorMappingRequestBo
+     * @return {@link CatalogVendorMappingResponseBo}
+     */
+    CatalogVendorMappingResponseBo getVendorMapping(CatalogVendorMappingRequestBo catalogVendorMappingRequestBo);
 }

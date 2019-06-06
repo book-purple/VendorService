@@ -17,6 +17,7 @@ public class Constants {
         public static final String GET_VENDOR_DETAILS = "/details";
         public static final String GET_VENDOR_LIST = "/vendors/{catalogRequestId}";
         public static final String ADD_VENDOR_MAPPING = "/vendor/mapping/add";
+        public static final String GET_VENDOR_MAPPING = "/vendor/mapping/get";
         public static final String ADD_SERVICE_VENDOR_MAPPING = "/service/vendor/add";
     }
 }

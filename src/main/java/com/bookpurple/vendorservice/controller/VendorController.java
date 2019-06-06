@@ -82,4 +82,15 @@ public class VendorController {
                 .convertCatalogVendorMappingResponseBoToDto(vendorMappingResponseBo);
         return new ResponseEntity<CatalogVendorMappingResponseDto>(catalogVendorMappingResponseDto, HttpStatus.OK);
     }
+
+    @PostMapping(value = Constants.UriConstants.GET_VENDOR_MAPPING,
+            consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<CatalogVendorMappingResponseDto> getVendorMapping(@RequestBody CatalogVendorMappingRequestDto catalogVendorMappingRequestDto) {
+        CatalogVendorMappingResponseBo catalogVendorMappingResponseBo = catalogVendorMappingService
+                .getVendorMapping(vendorServiceMapper
+                        .convertCatalogVendorMappingRequestDtoToBo(catalogVendorMappingRequestDto));
+        CatalogVendorMappingResponseDto catalogVendorMappingResponseDto = vendorServiceMapper
+                .convertCatalogVendorMappingResponseBoToDto(catalogVendorMappingResponseBo);
+        return new ResponseEntity<>(catalogVendorMappingResponseDto, HttpStatus.OK);
+    }
 }
