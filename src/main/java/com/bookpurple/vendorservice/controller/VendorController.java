@@ -3,10 +3,7 @@ package com.bookpurple.vendorservice.controller;
 import com.bookpurple.vendorservice.bo.CatalogVendorMappingResponseBo;
 import com.bookpurple.vendorservice.bo.NewVendorRequestBo;
 import com.bookpurple.vendorservice.constant.Constants;
-import com.bookpurple.vendorservice.dto.CatalogVendorMappingRequestDto;
-import com.bookpurple.vendorservice.dto.CatalogVendorMappingResponseDto;
-import com.bookpurple.vendorservice.dto.VendorDto;
-import com.bookpurple.vendorservice.dto.VendorRequestDto;
+import com.bookpurple.vendorservice.dto.*;
 import com.bookpurple.vendorservice.mapper.VendorServiceMapper;
 import com.bookpurple.vendorservice.service.ICatalogVendorMappingService;
 import com.bookpurple.vendorservice.service.IVendorService;
@@ -35,6 +32,10 @@ public class VendorController {
     @Autowired
     private VendorServiceMapper vendorServiceMapper;
 
+    /**
+     * API to get all vendors
+     * @return List of VendorDto
+     */
     @GetMapping(value = Constants.UriConstants.GET_ALL_VENDORS, produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<List<VendorDto>> getAllVendors() {
         List<VendorDto> vendorDtos = vendorServiceMapper.
@@ -42,12 +43,21 @@ public class VendorController {
         return new ResponseEntity<>(vendorDtos, HttpStatus.OK);
     }
 
+    /**
+     * API to add dummy vendors
+     * @return success as string
+     */
     @GetMapping(value = Constants.UriConstants.PUT_DUMMY_VENDORS, produces = {APPLICATION_JSON_VALUE})
     public ResponseEntity<String> addDummyVendors() {
         vendorService.addDummyVendors();
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+    /**
+     * API to add vendor
+     * @param vendorRequestDto vendorRequestDto
+     * @return success as string
+     */
     @PostMapping(value = Constants.UriConstants.ADD_VENDOR,
             consumes = {APPLICATION_JSON_VALUE},
             produces = {APPLICATION_JSON_VALUE})
@@ -57,13 +67,23 @@ public class VendorController {
         return new ResponseEntity<>("Success", HttpStatus.OK);
     }
 
-    @PostMapping(value = Constants.UriConstants.GET_VENDOR_DETAILS,
-            consumes = APPLICATION_JSON_VALUE,
-            produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getVendorDetails() {
+    /**
+     * Vendor Details Page API
+     * API to get vendor Details
+     * @param vendorId vendorId
+     * @return VendorDetailsPageResponseDto
+     */
+    @GetMapping(value = Constants.UriConstants.GET_VENDOR_DETAILS, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getVendorDetails(@RequestParam String vendorId) {
+
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+    /**
+     * API to get vendor list
+     * @param requestId requestId
+     * @return list of vendors
+     */
     @GetMapping(value = Constants.UriConstants.GET_VENDOR_LIST,
             produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<String> getVendorsList(@PathVariable String requestId) {
@@ -71,6 +91,11 @@ public class VendorController {
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 
+    /**
+     * API to add vendor to service/event mapping
+     * @param catalogVendorMappingRequestDto catalogVendorMappingRequestDto
+     * @return {@link CatalogVendorMappingResponseDto}
+     */
     @PostMapping(value = Constants.UriConstants.ADD_VENDOR_MAPPING,
             consumes = APPLICATION_JSON_VALUE,
             produces = APPLICATION_JSON_VALUE)
@@ -83,6 +108,11 @@ public class VendorController {
         return new ResponseEntity<CatalogVendorMappingResponseDto>(catalogVendorMappingResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * API to get vendor to service/event mapping
+     * @param catalogVendorMappingRequestDto catalogVendorMappingRequestDto
+     * @return {@link CatalogVendorMappingResponseDto}
+     */
     @PostMapping(value = Constants.UriConstants.GET_VENDOR_MAPPING,
             consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CatalogVendorMappingResponseDto> getVendorMapping(@RequestBody CatalogVendorMappingRequestDto catalogVendorMappingRequestDto) {
@@ -92,5 +122,11 @@ public class VendorController {
         CatalogVendorMappingResponseDto catalogVendorMappingResponseDto = vendorServiceMapper
                 .convertCatalogVendorMappingResponseBoToDto(catalogVendorMappingResponseBo);
         return new ResponseEntity<>(catalogVendorMappingResponseDto, HttpStatus.OK);
+    }
+
+    @GetMapping(value = Constants.UriConstants.VENDOR_DETAILS_API)
+    public ResponseEntity<DetailsPageResponseDto> getVendorDetails() {
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
