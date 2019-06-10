@@ -1,12 +1,10 @@
 package com.bookpurple.vendorservice.mapper;
 
 import com.bookpurple.vendorservice.bo.*;
-import com.bookpurple.vendorservice.dto.CatalogVendorMappingRequestDto;
-import com.bookpurple.vendorservice.dto.CatalogVendorMappingResponseDto;
-import com.bookpurple.vendorservice.dto.VendorDto;
-import com.bookpurple.vendorservice.dto.VendorRequestDto;
+import com.bookpurple.vendorservice.dto.*;
 import com.bookpurple.vendorservice.entity.EventVendorMappingEntity;
 import com.bookpurple.vendorservice.entity.ServiceVendorMappingEntity;
+import com.bookpurple.vendorservice.entity.VendorDetailsEntity;
 import com.bookpurple.vendorservice.entity.VendorEntity;
 import org.mapstruct.Mapper;
 
@@ -41,4 +39,12 @@ public interface VendorServiceMapper {
     ServiceVendorMappingBo convertServiceVendorMappingEntityToBo(ServiceVendorMappingEntity serviceVendorMappingEntity);
 
     ServiceVendorMappingEntity convertServiceVendorMappingBoToEntity(ServiceVendorMappingBo serviceVendorMappingBo);
+
+    VendorDetailsBo convertVendorDetailsEntityToBo(VendorDetailsEntity vendorDetailsEntity);
+
+    VendorDetailsEntity convertVendorDetailsBoToEntity(VendorDetailsBo vendorDetailsBo);
+
+    DetailsPageResponseDto convertDetailsPageResponseBoToDto(DetailsPageResponseBo detailsPageResponseBo);
+
+    VendorDetailsRequestBo convertVendorDetailsRequestDtoToBo(VendorDetailsRequestDto vendorDetailsRequestDto);
 }

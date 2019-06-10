@@ -8,7 +8,6 @@ import com.bookpurple.vendorservice.entity.EventVendorMappingEntity;
 import com.bookpurple.vendorservice.entity.ServiceVendorMappingEntity;
 import com.bookpurple.vendorservice.entity.VendorEntity;
 import com.bookpurple.vendorservice.mapper.VendorServiceMapper;
-import com.bookpurple.vendorservice.model.mongo.VendorModel;
 import com.bookpurple.vendorservice.repo.master.EventVendorMappingMasterRepo;
 import com.bookpurple.vendorservice.repo.master.ServiceVendorMappingMasterRepo;
 import com.bookpurple.vendorservice.repo.slave.EventVendorMappingSlaveRepo;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /*
  * Written by Gaurav Sharma on 03 Jun 2019

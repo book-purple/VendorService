@@ -2,7 +2,6 @@ package com.bookpurple.vendorservice.bo;
 
 import com.bookpurple.vendorservice.entity.VendorEntity;
 import com.bookpurple.vendorservice.model.mongo.ServiceVendorMappingModel;
-import com.bookpurple.vendorservice.model.mongo.VendorModel;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;

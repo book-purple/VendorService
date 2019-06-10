@@ -2,6 +2,8 @@ package com.bookpurple.vendorservice.controller;
 
 import com.bookpurple.vendorservice.bo.CatalogVendorMappingResponseBo;
 import com.bookpurple.vendorservice.bo.NewVendorRequestBo;
+import com.bookpurple.vendorservice.bo.VendorDetailsRequestBo;
+import com.bookpurple.vendorservice.component.IVendorDetailsPageService;
 import com.bookpurple.vendorservice.constant.Constants;
 import com.bookpurple.vendorservice.dto.*;
 import com.bookpurple.vendorservice.mapper.VendorServiceMapper;
@@ -32,8 +34,12 @@ public class VendorController {
     @Autowired
     private VendorServiceMapper vendorServiceMapper;
 
+    @Autowired
+    private IVendorDetailsPageService detailsPageService;
+
     /**
      * API to get all vendors
+     *
      * @return List of VendorDto
      */
     @GetMapping(value = Constants.UriConstants.GET_ALL_VENDORS, produces = {APPLICATION_JSON_VALUE})
@@ -45,6 +51,7 @@ public class VendorController {
 
     /**
      * API to add dummy vendors
+     *
      * @return success as string
      */
     @GetMapping(value = Constants.UriConstants.PUT_DUMMY_VENDORS, produces = {APPLICATION_JSON_VALUE})
@@ -55,6 +62,7 @@ public class VendorController {
 
     /**
      * API to add vendor
+     *
      * @param vendorRequestDto vendorRequestDto
      * @return success as string
      */
@@ -68,19 +76,8 @@ public class VendorController {
     }
 
     /**
-     * Vendor Details Page API
-     * API to get vendor Details
-     * @param vendorId vendorId
-     * @return VendorDetailsPageResponseDto
-     */
-    @GetMapping(value = Constants.UriConstants.GET_VENDOR_DETAILS, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getVendorDetails(@RequestParam String vendorId) {
-
-        return new ResponseEntity<>("success", HttpStatus.OK);
-    }
-
-    /**
      * API to get vendor list
+     *
      * @param requestId requestId
      * @return list of vendors
      */
@@ -93,6 +90,7 @@ public class VendorController {
 
     /**
      * API to add vendor to service/event mapping
+     *
      * @param catalogVendorMappingRequestDto catalogVendorMappingRequestDto
      * @return {@link CatalogVendorMappingResponseDto}
      */
@@ -110,6 +108,7 @@ public class VendorController {
 
     /**
      * API to get vendor to service/event mapping
+     *
      * @param catalogVendorMappingRequestDto catalogVendorMappingRequestDto
      * @return {@link CatalogVendorMappingResponseDto}
      */
@@ -124,9 +123,31 @@ public class VendorController {
         return new ResponseEntity<>(catalogVendorMappingResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * Vendor Details Page API
+     *
+     * @return {@link DetailsPageResponseDto}
+     */
     @GetMapping(value = Constants.UriConstants.VENDOR_DETAILS_API)
-    public ResponseEntity<DetailsPageResponseDto> getVendorDetails() {
+    public ResponseEntity<DetailsPageResponseDto> getVendorDetails(@RequestParam String vendorId) {
+        DetailsPageResponseDto detailsPageResponseDto =
+                vendorServiceMapper
+                        .convertDetailsPageResponseBoToDto(detailsPageService
+                                .createVendorDetailsPage(vendorId));
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(detailsPageResponseDto, HttpStatus.OK);
+    }
+
+    /**
+     * API to add vendor details
+     *
+     * @param vendorDetailsRequestDto vendorDetailsRequestDto
+     * @return success as a string
+     */
+    @PostMapping(value = Constants.UriConstants.ADD_VENDOR_DETAILS)
+    public ResponseEntity<String> addVendorDetails(@RequestBody VendorDetailsRequestDto vendorDetailsRequestDto) {
+        VendorDetailsRequestBo vendorDetailsRequestBo = vendorServiceMapper.convertVendorDetailsRequestDtoToBo(vendorDetailsRequestDto);
+        vendorService.createVendorDetails(vendorDetailsRequestBo);
+        return new ResponseEntity<>("success", HttpStatus.OK);
     }
 }

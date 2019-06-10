@@ -2,9 +2,14 @@ package com.bookpurple.vendorservice.service.impl;
 
 import com.bookpurple.vendorservice.bo.NewVendorRequestBo;
 import com.bookpurple.vendorservice.bo.VendorBo;
+import com.bookpurple.vendorservice.bo.VendorDetailsBo;
+import com.bookpurple.vendorservice.bo.VendorDetailsRequestBo;
+import com.bookpurple.vendorservice.entity.VendorDetailsEntity;
 import com.bookpurple.vendorservice.entity.VendorEntity;
 import com.bookpurple.vendorservice.mapper.VendorServiceMapper;
+import com.bookpurple.vendorservice.repo.master.VendorDetailsMasterRepo;
 import com.bookpurple.vendorservice.repo.master.VendorMasterRepo;
+import com.bookpurple.vendorservice.repo.slave.VendorDetailsSlaveRepo;
 import com.bookpurple.vendorservice.repo.slave.VendorSlaveRepo;
 import com.bookpurple.vendorservice.service.IVendorService;
 import com.bookpurple.vendorservice.util.CommonUtil;
@@ -28,10 +33,16 @@ public class VendorServiceImpl implements IVendorService {
     private VendorSlaveRepo vendorSlaveRepo;
 
     @Autowired
-    private VendorServiceMapper serviceMapper;
+    private VendorDetailsMasterRepo vendorDetailsMasterRepo;
+
+    @Autowired
+    private VendorDetailsSlaveRepo vendorDetailsSlaveRepo;
 
     @Autowired
     private VendorDummyDataProvider vendorDummyDataProvider;
+
+    @Autowired
+    private VendorServiceMapper serviceMapper;
 
     @Override
     public VendorBo createVendor(NewVendorRequestBo vendorRequestBo) {
@@ -75,4 +86,33 @@ public class VendorServiceImpl implements IVendorService {
     public VendorEntity getVendorEntityByVendorId(String vendorId) {
         return vendorSlaveRepo.findById(vendorId).orElse(null);
     }
+
+    @Override
+    public VendorDetailsBo getVendorDetails(String vendorId) {
+        VendorDetailsEntity vendorDetailsEntity = vendorDetailsSlaveRepo.findByVendorId(vendorId);
+        return serviceMapper.convertVendorDetailsEntityToBo(vendorDetailsEntity);
+    }
+
+    @Override
+    public VendorDetailsBo createVendorDetails(VendorDetailsRequestBo vendorDetailsRequestBo) {
+        VendorDetailsBo vendorDetailsBo = VendorDetailsBo.builder()
+                .vendorId(vendorDetailsRequestBo.getVendorId())
+                .vendorName(vendorDetailsRequestBo.getVendorName())
+                .vendorDesc(vendorDetailsRequestBo.getVendorDesc())
+                .images(vendorDetailsRequestBo.getImages())
+                .reviewCount(vendorDetailsRequestBo.getReviewCount())
+                .providedServices(vendorDetailsRequestBo.getProvidedServices())
+                .tags(vendorDetailsRequestBo.getTags())
+                .build();
+        VendorDetailsEntity vendorDetailsEntity = serviceMapper.convertVendorDetailsBoToEntity(vendorDetailsBo);
+        return serviceMapper.convertVendorDetailsEntityToBo(vendorDetailsMasterRepo.save(vendorDetailsEntity));
+    }
+
+    @Override
+    public VendorDetailsBo updateVendorDetails(VendorDetailsBo vendorDetailsBo) {
+        VendorDetailsEntity vendorDetailsEntity = serviceMapper.convertVendorDetailsBoToEntity(vendorDetailsBo);
+        return serviceMapper.convertVendorDetailsEntityToBo(vendorDetailsEntity);
+    }
+
+
 }

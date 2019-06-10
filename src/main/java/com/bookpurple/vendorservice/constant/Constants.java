@@ -21,5 +21,6 @@ public class Constants {
         public static final String ADD_SERVICE_VENDOR_MAPPING = "/service/vendor/add";
 
         public static final String VENDOR_DETAILS_API = "vendor/details/{vendor_id}";
+        public static final String ADD_VENDOR_DETAILS = "vendor/details/add";
     }
 }
