@@ -103,6 +103,7 @@ public class VendorServiceImpl implements IVendorService {
                 .reviewCount(vendorDetailsRequestBo.getReviewCount())
                 .providedServices(vendorDetailsRequestBo.getProvidedServices())
                 .tags(vendorDetailsRequestBo.getTags())
+                .location(vendorDetailsRequestBo.getLocation())
                 .build();
         VendorDetailsEntity vendorDetailsEntity = serviceMapper.convertVendorDetailsBoToEntity(vendorDetailsBo);
         return serviceMapper.convertVendorDetailsEntityToBo(vendorDetailsMasterRepo.save(vendorDetailsEntity));

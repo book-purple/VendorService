@@ -129,7 +129,7 @@ public class VendorController {
      * @return {@link DetailsPageResponseDto}
      */
     @GetMapping(value = Constants.UriConstants.VENDOR_DETAILS_API)
-    public ResponseEntity<DetailsPageResponseDto> getVendorDetails(@RequestParam String vendorId) {
+    public ResponseEntity<DetailsPageResponseDto> getVendorDetails(@PathVariable("vendor_id") String vendorId) {
         DetailsPageResponseDto detailsPageResponseDto =
                 vendorServiceMapper
                         .convertDetailsPageResponseBoToDto(detailsPageService
