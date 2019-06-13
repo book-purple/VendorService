@@ -107,6 +107,12 @@ public class CatalogVendorMappingServiceImpl implements ICatalogVendorMappingSer
                 .build();
     }
 
+    /**
+     * Function to get vendor-service mapping
+     *
+     * @param serviceId serviceId
+     * @return {@link ServiceVendorMappingBo}
+     */
     private ServiceVendorMappingBo getServiceVendorMapping(String serviceId) {
         ServiceVendorMappingEntity serviceVendorMappingEntity = serviceVendorMappingSlaveRepo.findByServiceId(serviceId);
         if (null != serviceVendorMappingEntity) {
